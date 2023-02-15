@@ -82,6 +82,7 @@ function runPrompts() {
     })
 }
 
+//view  employees
 function viewAllEmployees() {
     db.allEmployees()
     .then(([rows]) => {
@@ -89,4 +90,96 @@ function viewAllEmployees() {
         console.log("\n");
         console.table(roles);
     })
+    .then(() => runPrompts());
+}
+
+//view roles 
+function viewAllRoles() {
+    db.allRoles()
+    .then(([rows]) => {
+        let roles = rows;
+        console.log("\n");
+        console.table(roles);
+    })
+    .then(() => runPrompts());
+}
+
+//add role
+function createRole() {
+    db.allDepartments() 
+        .then(([rows]) => {
+            let departments = rows;
+            const departmentChoices = departments.map(({ id, name }) => ({
+                name: name,
+                value: id
+            }));
+
+            prompt([
+                {
+                    name: "title",
+                    message: "What is te name of the role?"
+                },
+                {
+                    name: "salary",
+                    message: "What is the salary rate?"
+                },
+                {
+                    type: "list",
+                    name: "department_id",
+                    messafe: "Which department does the role fall under?",
+                    choices: departmentChoices
+                }
+            ])
+                .then(role => {
+                    db.addrole(role)
+                        .then(() => console.log(`Added ${role.title} to the database`))
+                        .then(() => runPrompts())
+                })
+        })
+}
+
+//add department
+function createDepartment() {
+    prompt([
+        {
+            name: "name",
+            message: "What is the name of the department?"
+        }
+    ])
+        .then(res => {
+            let name = res;
+            db.addDepartmen(name)
+            .then(() => console.log(`Added ${name.name} to the database`))
+            .then(() => runPrompts())
+        })
+}
+
+
+//add employee
+function createEmployee() {
+    prompt([
+        {
+            name: "first_name",
+            message: "What's the first name of the employee?"
+        },
+        {
+            name: "last_name",
+            message: "What's the last name of the employee?"
+        }
+    ])
+        .then(res => {
+            let firstName = res.first_name;
+            let lastName = res.last_name;
+
+            db.allRoles()
+                .then(([rows]) => {
+                    let roles = rows;
+                    const roleChoices = roles.map(({ id, title}) => ({
+                        name: title,
+                        value: id
+                    }));
+
+                    
+                })
+        })
 }
