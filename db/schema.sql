@@ -12,9 +12,9 @@ CREATE TABLE role(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50) UNIQUE NOT NULL,
     salary DECIMAL UNSIGNED NOT NULL,
-    deparmtment_id INT UNSIGNED NOT NULL,
+    department_id INT UNSIGNED NOT NULL,
     INDEX dep_ind (department_id),
-    CONSTANINT fk_department FOREIGN KEY (deparmtment_id) REFERENCES department(id) ON DELETE CASCADE
+    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employee(

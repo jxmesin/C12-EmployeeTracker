@@ -1,5 +1,6 @@
 const { prompt } = require("inquirer");
-const { updateEmployeeRole } = require("../../employee-tracker/db");
+// const mysql = require("mysql2");
+// const { updateEmployeeRole } = require("../../employee-tracker/db");
 const db = require("./db");
 require("console.table");
 
@@ -148,7 +149,7 @@ function createDepartment() {
     ])
         .then(res => {
             let name = res;
-            db.addDepartmen(name)
+            db.addDepartment(name)
             .then(() => console.log(`Added ${name.name} to the database`))
             .then(() => runPrompts())
         })
